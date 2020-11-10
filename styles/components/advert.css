@@ -1,0 +1,11 @@
+.ad-box {
+    margin-top: .5rem;
+}
+.ad-box div  {
+    border-radius: .3rem;
+    margin-bottom: .2rem;
+}
+.ad-box div img {
+    width: 100%;
+    height: 8rem;
+}
