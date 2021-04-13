@@ -44,7 +44,7 @@ export default function MyList() {
               <Breadcrumb.Item>
                 <a href="/">首页</a>
               </Breadcrumb.Item>
-              <Breadcrumb.Item>视频列表</Breadcrumb.Item>
+              <Breadcrumb.Item>文章列表</Breadcrumb.Item>
             </Breadcrumb>
           </div>
           <List
@@ -56,16 +56,13 @@ export default function MyList() {
                 <div className="list-title">{item.title}</div>
                 <div className="list-icon">
                   <span>
-                    {' '}
                     <CalendarOutlined /> 2020-10-9
                   </span>
                   <span>
-                    {' '}
                     <VideoCameraOutlined />
                     视频教程
                   </span>
                   <span>
-                    {' '}
                     <UserOutlined />
                     5283人
                   </span>

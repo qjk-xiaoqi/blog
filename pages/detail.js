@@ -1,15 +1,15 @@
 import React from 'react'
 import Head from 'next/head'
+import ReactMarkdown from 'react-markdown'
+import MarkNav from 'markdown-navbar'
 import Link from 'next/link'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import { Col, Row, Breadcrumb, Affix } from 'antd'
-import ReactMarkdown from 'react-markdown'
-import MarkNav from 'markdown-navbar'
-import 'markdown-navbar/dist/navbar.css'
 import { CalendarOutlined, VideoCameraOutlined, UserOutlined } from '@ant-design/icons'
+import 'markdown-navbar/dist/navbar.css'
 import '../styles/pages/detail.css'
 
 export default function Detail() {
@@ -71,11 +71,9 @@ export default function Detail() {
             <div className="detail-title">TS 基础总结</div>
             <div className="list-icon list-center">
               <span>
-                {' '}
                 <CalendarOutlined /> 2020-10-9
               </span>
               <span>
-                {' '}
                 <VideoCameraOutlined />
                 视频教程
               </span>

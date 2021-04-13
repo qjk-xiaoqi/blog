@@ -49,11 +49,9 @@ export default function Home() {
                 <div className="list-title">{item.title}</div>
                 <div className="list-icon">
                   <span>
-                    {' '}
                     <CalendarOutlined /> 2020-10-9
                   </span>
                   <span>
-                    {' '}
                     <VideoCameraOutlined />
                     视频教程
                   </span>
