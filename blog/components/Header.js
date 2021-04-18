@@ -1,25 +1,62 @@
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Menu, Icon } from 'antd'
 import { HomeOutlined, VideoCameraOutlined, SmileOutlined } from '@ant-design/icons'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import '../styles/components/header.css'
 
+const routerMap = {
+  home: '/',
+  article: '/list?type=1',
+  photo: '/list?type=2',
+  life: '/list?type=3',
+}
+const routerKey = Object.keys(routerMap)
+
 const Header = () => {
+  const router = useRouter()
+  const [curNav, setCurNav] = useState('')
+
+  const handleNav = e => {
+    setCurNav(e.key)
+  }
+
+  useEffect(() => {
+    const curKey = routerKey.find(item => routerMap[item] === router.asPath)
+    console.log(curKey, 'oooooo')
+    if (!curKey) {
+      return
+    }
+    setCurNav(curKey)
+  }, [])
   return (
     <div className="header">
-      <Row type="flex" justify="center">
-        <Col xs={24} sm={24} md={10} lg={15} xl={12}>
+      <Row type="flex" justify="space-between" align="middle" className="comm-header">
+        <Col xs={24} sm={24} md={10} lg={15} xl={4}>
           <span className="header-logo">小柒</span>
           <span className="header-text">爱前端</span>
         </Col>
-        <Col className="menu-box" xs={0} sm={0} md={14} lg={8} xl={6}>
-          <Menu mode="horizontal">
+        <Col className="menu-box" xs={0} sm={0} md={14} lg={8} xl={20}>
+          <Menu mode="horizontal" selectedKeys={[curNav]} onClick={handleNav}>
             <Menu.Item key="home" icon={<HomeOutlined />}>
-              首页
+              <Link href="/">
+                <a>首页</a>
+              </Link>
             </Menu.Item>
-            <Menu.Item key="video" icon={<VideoCameraOutlined />}>
-              视频
+            <Menu.Item key="article" icon={<VideoCameraOutlined />}>
+              <Link href="/list?type=1">
+                <a>文章</a>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="photo" icon={<VideoCameraOutlined />}>
+              <Link href="/list?type=2">
+                <a>摄影</a>
+              </Link>
             </Menu.Item>
             <Menu.Item key="life" icon={<SmileOutlined />}>
-              生活
+              <Link href="/list?type=3">
+                <a>生活</a>
+              </Link>
             </Menu.Item>
           </Menu>
         </Col>

@@ -5,7 +5,6 @@ const Author = () => {
   return (
     <div className="author-box comm-box">
       <div>
-        {' '}
         <Avatar size={100} src="https://profile.csdnimg.cn/D/F/F/1_qq_41257129" />
       </div>
       <div className="author-introduction">

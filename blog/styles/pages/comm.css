@@ -1,38 +1,45 @@
-html>body {
-    padding: 0;
-    margin: 0;
-    background-color: #f6f6f6;
+html > body {
+  padding: 0;
+  margin: 0;
+  background-color: #f5f7fa;
 }
-  
+.comm-header {
+  margin: 0 10rem;
+}
+.comm-content {
+  margin: 0 10rem;
+}
 .comm-left {
-    background-color: #fff;
-    padding:.3rem;
-    border-radius: .3rem;
-    border-bottom: 1px solid #eee;
+  background-color: #fff;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border-bottom: 1px solid #eee;
+  /* margin-right: 20px; */
 }
-  .comm-box {
-    background-color: #fff;
-    margin-left:.5rem;
-    padding:.3rem;
-    border-radius: .3rem;
-    border-bottom: 1px solid #eee;
-  }
-  .comm-main {
-    margin-top:.5rem;
-  }
-  .list-title {
-    font-size:1.3rem;
-    color: #1e90ff;
-    padding: 0 0.5rem;
+.comm-box {
+  background-color: #fff;
+  margin-left: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border-bottom: 1px solid #eee;
+}
+.comm-main {
+  margin-top: 0.5rem;
+  min-height: 600px;
+}
+.list-title {
+  font-size: 1.3rem;
+  color: #1e90ff;
+  padding: 0 0.5rem;
 }
 .list-context {
-    color:#777;
-    padding: .5rem;
+  color: #777;
+  padding: 0.5rem;
 }
 .list-icon {
-    padding:.5rem 0;
-    color: #AAA;
+  padding: 0.5rem 0;
+  color: #aaa;
 }
 .list-icon span {
-    padding:0 5px;
+  padding: 0 5px;
 }

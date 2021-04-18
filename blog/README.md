@@ -1,14 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 博客系统
 
-## Getting Started
+### 功能
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
+- 首页获取最新的文章
+-
 
 ## 路由
 
