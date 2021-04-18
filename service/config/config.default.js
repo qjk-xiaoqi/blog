@@ -34,7 +34,7 @@ module.exports = appInfo => {
       // username
       user: 'root',
       // password
-      password: 'wanmian123',
+      password: '123456',
       // database
       database: 'blog',
     },
@@ -42,6 +42,18 @@ module.exports = appInfo => {
     app: true,
     // load into agent, default is close
     agent: false,
+  }
+
+  // 配置安全机制
+  config.security = {
+    csrf: { enable: false },
+    domainWhiteList: ['*'],
+  }
+
+  // 允许跨域
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   }
 
   return {

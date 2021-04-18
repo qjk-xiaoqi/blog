@@ -6,5 +6,7 @@
 module.exports = app => {
   const { router, controller } = app
   router.get('/blog/home', controller.blog.home.index)
-  router.get('/blog/list', controller.blog.home.list)
+  router.get('/blog/list', controller.blog.home.getArticleList)
+  router.get('/blog/detail', controller.blog.home.getArticleById)
+  router.get('/blog/typeList', controller.blog.home.getListById)
 }
