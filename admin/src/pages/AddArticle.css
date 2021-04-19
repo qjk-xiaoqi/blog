@@ -1,0 +1,107 @@
+.add-left {
+  margin-right: 40px;
+}
+
+.add-save-btn {
+  margin-right: 20px;
+}
+
+.add-editor {
+  background-color: #f4f4f4;
+}
+
+.add-preview {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 100%;
+  background-color: #fff;
+  overflow: auto;
+}
+
+.add-preview h1 {
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.add-preview h2 {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.add-preview h3 {
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.add-preview h4 {
+  font-size: 20px;
+  line-height: 28px;
+}
+.add-preview h5 {
+  font-size: 18px;
+  line-height: 26px;
+}
+.add-preview h6 {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.add-preview h1,
+.add-preview h2,
+.add-preview h3,
+.add-preview h4,
+.add-preview h5,
+.add-preview h6 {
+  color: #4f4f4f;
+  margin: 8px 0 16px;
+  font-weight: 700;
+}
+
+.add-preview pre {
+  display: block;
+  background-color: #f0f0f0;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.add-preview code {
+  background-color: #fff5f5;
+  border-radius: 5px;
+  color: #ff502c;
+}
+
+.add-preview pre > code {
+  color: #000;
+  font-size: 12px;
+  text-align: left;
+  background-color: #f0f0f0;
+}
+
+.add-preview blockquote {
+  display: block;
+  padding: 16px;
+  margin: 0 0 24px;
+  border-left: 8px solid #dddfe4;
+  background: #eef0f4;
+  overflow: auto;
+  word-break: break-word !important;
+}
+
+.add-preview blockquote p {
+  margin: 0;
+}
+
+.add-select-box {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-introduce {
+  margin-top: 22px;
+}
+
+.date-select {
+  margin-top: 10px;
+}
