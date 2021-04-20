@@ -1,39 +1,47 @@
 import React, { useState } from 'react'
-import 'antd/dist/antd.css'
-import { Card, Input, Button, Spin, Form } from 'antd'
+import { Card, Input, Button, Spin, Form, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { checkLogin } from '../util/api'
+import 'antd/dist/antd.css'
 import './Login.css'
 
-const Login = () => {
-  const [username, setUserName] = useState('')
-  const [password, setPassword] = useState('')
+const Login = props => {
   const [loading, setLoading] = useState(false)
+  const [form] = Form.useForm()
 
   const handleSubmit = () => {
-    setLoading(true)
+    form.validateFields().then(values => {
+      const params = { ...values }
+      setLoading(true)
+      checkLogin(params).then(res => {
+        const { data, status } = res
+        if (status === 0) {
+          localStorage.setItem('openId', data.openId)
+          props.history.push('/index')
+          setLoading(false)
+        }
+        if (status === 1) {
+          message.error('用户名密码错误')
+          setTimeout(() => {
+            setLoading(false)
+          }, 500)
+        }
+      })
+    })
   }
   return (
     <div className="login">
       <Spin tip="登录中..." spinning={loading}>
         <Card bordered title="博客后台管理系统">
-          <Form name="login" className="login-form">
-            <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]}>
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="请输入用户名"
-                onChange={e => {
-                  setUserName(e.target.value)
-                }}
-              />
+          <Form form={form} name="login" className="login-form">
+            <Form.Item name="userName" rules={[{ required: true, message: '请输入用户名' }]}>
+              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="请输入用户名" />
             </Form.Item>
             <Form.Item name="password" rules={[{ required: true, message: '请输入密码' }]}>
               <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="请输入密码"
-                onChange={e => {
-                  setPassword(e.target.value)
-                }}
               />
             </Form.Item>
             {/* <Form.Item>
