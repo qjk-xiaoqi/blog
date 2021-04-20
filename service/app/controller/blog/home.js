@@ -3,9 +3,6 @@
 const Controller = require('egg').Controller
 
 class HomeController extends Controller {
-  async index() {
-    this.ctx.body = 'hi'
-  }
   async getArticleList() {
     const sql =
       'SELECT article.id as id,' +
