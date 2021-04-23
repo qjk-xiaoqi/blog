@@ -3,16 +3,25 @@ import { Route } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from 'antd'
 import { DesktopOutlined, PieChartOutlined, FileOutlined, UserOutlined } from '@ant-design/icons'
 import AddArticle from './AddArticle'
+import ArticleList from './ArticleList'
 import './Index.css'
 
 const { Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
 
-const AdminIndex = () => {
+const AdminIndex = props => {
   const [collapsed, setCollapsed] = useState('false')
 
   const onCollapse = collapsed => {
     setCollapsed(collapsed)
+  }
+
+  const handleClickArticle = e => {
+    if (e.key === 'addArticle') {
+      props.history.push('/index/add')
+    } else {
+      props.history.push('/index/list')
+    }
   }
 
   return (
@@ -20,17 +29,17 @@ const AdminIndex = () => {
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="admin-logo" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
+          <Menu.Item key="work" icon={<PieChartOutlined />}>
             工作台
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
+          <Menu.Item key="add" icon={<DesktopOutlined />}>
             添加文章
           </Menu.Item>
-          <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理">
-            <Menu.Item key="3">添加文章</Menu.Item>
-            <Menu.Item key="4">文章列表</Menu.Item>
+          <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理" onClick={handleClickArticle}>
+            <Menu.Item key="addArticle">添加文章</Menu.Item>
+            <Menu.Item key="articleList">文章列表</Menu.Item>
           </SubMenu>
-          <Menu.Item key="9" icon={<FileOutlined />}>
+          <Menu.Item key="leave" icon={<FileOutlined />}>
             留言管理
           </Menu.Item>
         </Menu>
@@ -43,7 +52,9 @@ const AdminIndex = () => {
           </Breadcrumb>
           <div className="site-layout-background content" style={{ padding: 24, minHeight: 360 }}>
             <div>
-              <Route path="/index/" component={AddArticle}></Route>
+              <Route path="/index" exact component={AddArticle} />
+              <Route path="/index/add" component={AddArticle} />
+              <Route path="/index/list" component={ArticleList} />
             </div>
           </div>
         </Content>

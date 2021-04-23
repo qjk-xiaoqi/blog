@@ -13,20 +13,26 @@ const Login = props => {
     form.validateFields().then(values => {
       const params = { ...values }
       setLoading(true)
-      checkLogin(params).then(res => {
-        const { data, status } = res
-        if (status === 0) {
-          localStorage.setItem('openId', data.openId)
-          props.history.push('/index')
+      checkLogin(params)
+        .then(res => {
+          const { data, status } = res
+          if (status === 0) {
+            localStorage.setItem('openId', data.openId)
+            props.history.push('/index')
+          }
+          if (status === 1) {
+            message.error('用户名密码错误')
+            setTimeout(() => {
+              setLoading(false)
+            }, 500)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(() => {
           setLoading(false)
-        }
-        if (status === 1) {
-          message.error('用户名密码错误')
-          setTimeout(() => {
-            setLoading(false)
-          }, 500)
-        }
-      })
+        })
     })
   }
   return (
