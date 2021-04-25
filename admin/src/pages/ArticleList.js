@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { List, Row, Col, Modal, message, Button } from 'antd'
+import moment from 'moment'
 import { getArticleList, delArticle } from '../util/api'
 import './ArticleList.css'
 
@@ -63,19 +64,21 @@ const ArticleList = props => {
       <List
         header={
           <Row className="list-div">
-            <Col span={6}>
+            <Col span={5}>
               <b>标题</b>
             </Col>
-            <Col span={4}>
+            <Col span={3}>
               <b>类别</b>
             </Col>
             <Col span={4}>
               <b>发布时间</b>
             </Col>
-            <Col span={4}>
+            <Col span={3}>
               <b>浏览量</b>
             </Col>
-
+            <Col span={3}>
+              <b>状态</b>
+            </Col>
             <Col span={6}>
               <b>操作</b>
             </Col>
@@ -92,10 +95,11 @@ const ArticleList = props => {
         renderItem={item => (
           <List.Item>
             <Row className="list-div">
-              <Col span={6}>{item.title}</Col>
-              <Col span={4}>{item.type_name}</Col>
-              <Col span={4}>{item.add_time}</Col>
-              <Col span={4}>{item.view_count}</Col>
+              <Col span={5}>{item.title}</Col>
+              <Col span={3}>{item.type_name}</Col>
+              <Col span={4}>{item.add_time ? moment.unix(item.add_time).format('YYYY-MM-DD HH:mm') : ''}</Col>
+              <Col span={3}>{item.view_count}</Col>
+              <Col span={3}>{item.is_Publish ? '已发布' : '未发布'}</Col>
               <Col span={6}>
                 <Button type="primary" onClick={() => handleUpdate(item.id)}>
                   修改

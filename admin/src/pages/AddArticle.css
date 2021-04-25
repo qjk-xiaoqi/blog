@@ -1,21 +1,41 @@
-.add-left {
-  margin-right: 40px;
+.add-btn {
+  margin-left: 20px;
+}
+.add-header {
+  display: flex;
+  height: 100%;
+}
+
+.add-title {
+  width: 50%;
+}
+
+.add-editor-box {
+  display: flex;
+  height: 70vh;
 }
 
 .add-save-btn {
-  margin-right: 20px;
+  margin: 0 20px;
 }
 
 .add-editor {
+  flex: 0 1 calc(50% - 5px);
   background-color: #f4f4f4;
 }
 
+.add-introduce {
+  margin: 22px 0;
+}
+
 .add-preview {
+  flex: 0 1 calc(50% - 5px);
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
-  height: 560px;
+  height: 100%;
+  margin-left: 10px;
   background-color: #fff;
   overflow: auto;
 }
@@ -91,17 +111,4 @@
 
 .add-preview blockquote p {
   margin: 0;
-}
-
-.add-select-box {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.add-introduce {
-  margin-top: 22px;
-}
-
-.date-select {
-  margin-top: 10px;
 }

@@ -18,6 +18,7 @@ const Login = props => {
           const { data, status } = res
           if (status === 0) {
             localStorage.setItem('openId', data.openId)
+            setLoading(false)
             props.history.push('/index')
           }
           if (status === 1) {
@@ -28,10 +29,8 @@ const Login = props => {
           }
         })
         .catch(err => {
-          console.log(err)
-        })
-        .finally(() => {
           setLoading(false)
+          console.log(err)
         })
     })
   }

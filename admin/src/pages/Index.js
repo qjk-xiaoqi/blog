@@ -1,55 +1,36 @@
-import React, { useState } from 'react'
-import { Route } from 'react-router-dom'
-import { Layout, Menu, Breadcrumb } from 'antd'
+import React from 'react'
+import { Route, useLocation } from 'react-router-dom'
+import { Layout, Menu } from 'antd'
 import { DesktopOutlined, PieChartOutlined, FileOutlined, UserOutlined } from '@ant-design/icons'
 import AddArticle from './AddArticle'
 import ArticleList from './ArticleList'
 import './Index.css'
 
-const { Content, Footer, Sider } = Layout
-const { SubMenu } = Menu
+const { Content, Sider } = Layout
 
 const AdminIndex = props => {
-  const [collapsed, setCollapsed] = useState('false')
-
-  const onCollapse = collapsed => {
-    setCollapsed(collapsed)
-  }
-
-  const handleClickArticle = e => {
-    if (e.key === 'addArticle') {
-      props.history.push('/index/add')
-    } else {
-      props.history.push('/index/list')
-    }
-  }
-
+  const location = useLocation()
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <div className="admin-logo" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="work" icon={<PieChartOutlined />}>
+      <Sider>
+        <div className="admin-logo">小柒博客</div>
+        <Menu theme="dark" defaultSelectedKeys={['/index']} selectedKeys={[location.pathname]} mode="inline">
+          <Menu.Item key="/index" icon={<PieChartOutlined />} onClick={() => props.history.push('/index')}>
             工作台
           </Menu.Item>
-          <Menu.Item key="add" icon={<DesktopOutlined />}>
+          <Menu.Item key="/index/add" icon={<DesktopOutlined />} onClick={() => props.history.push('/index/add')}>
             添加文章
           </Menu.Item>
-          <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理" onClick={handleClickArticle}>
-            <Menu.Item key="addArticle">添加文章</Menu.Item>
-            <Menu.Item key="articleList">文章列表</Menu.Item>
-          </SubMenu>
-          <Menu.Item key="leave" icon={<FileOutlined />}>
+          <Menu.Item key="/index/list" icon={<UserOutlined />} onClick={() => props.history.push('/index/list')}>
+            文章列表
+          </Menu.Item>
+          <Menu.Item key="/index/leave" icon={<FileOutlined />}>
             留言管理
           </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
+        <Content style={{ margin: '16px 16px' }}>
           <div className="site-layout-background content" style={{ padding: 24, minHeight: 360 }}>
             <div>
               <Route path="/index" exact component={AddArticle} />
@@ -58,7 +39,6 @@ const AdminIndex = props => {
             </div>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
     </Layout>
   )
