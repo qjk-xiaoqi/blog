@@ -27,6 +27,6 @@
   padding-right: 1rem;
 }
 .menu-box {
-  display: flex;
+  display: flex !important;
   justify-content: flex-end;
 }

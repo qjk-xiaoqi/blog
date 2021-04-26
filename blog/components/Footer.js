@@ -1,5 +1,3 @@
-import '../styles/components/footer.css'
-
 const Footer = () => {
   return (
     <div className="footer-box">

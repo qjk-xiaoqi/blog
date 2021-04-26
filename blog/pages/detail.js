@@ -11,8 +11,6 @@ import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import { getArticleById } from '../util/api'
-import 'highlight.js/styles/monokai-sublime.css'
-import '../styles/pages/detail.css'
 
 const Detail = ({ data, params }) => {
   const renderer = new marked.Renderer()

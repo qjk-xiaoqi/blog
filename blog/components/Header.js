@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Menu, Icon } from 'antd'
-import { HomeOutlined, VideoCameraOutlined, SmileOutlined } from '@ant-design/icons'
+import { Row, Col, Menu } from 'antd'
+import { HomeOutlined, VideoCameraOutlined, FileTextOutlined, SmileOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import '../styles/components/header.css'
 
 const routerMap = {
   home: '/',
@@ -23,7 +22,6 @@ const Header = () => {
 
   useEffect(() => {
     const curKey = routerKey.find(item => routerMap[item] === router.asPath)
-    console.log(curKey, 'oooooo')
     if (!curKey) {
       return
     }
@@ -43,7 +41,7 @@ const Header = () => {
                 <a>首页</a>
               </Link>
             </Menu.Item>
-            <Menu.Item key="article" icon={<VideoCameraOutlined />}>
+            <Menu.Item key="article" icon={<FileTextOutlined />}>
               <Link href="/list?type=1">
                 <a>文章</a>
               </Link>

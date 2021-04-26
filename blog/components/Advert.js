@@ -1,5 +1,3 @@
-import '../styles/components/advert.css'
-
 const Advert = () => {
   return (
     <div className="ad-box comm-box">

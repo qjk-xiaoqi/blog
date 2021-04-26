@@ -23,7 +23,7 @@ const get = (url, params = {}, config = {}) => {
   return request(url, params, config, 'get')
 }
 
-const post = (url, config = {}) => {
+const post = (url, params = {}, config = {}) => {
   return request(url, params, config, 'post')
 }
 

@@ -1,16 +1,45 @@
+.author-img {
+  border-radius: 50%;
+}
+
+.author-name {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #000;
+}
+
 .author-box {
   text-align: center;
   padding: 1rem;
 }
-.author-box div {
-  margin-bottom: 1rem;
-}
+
 .author-introduction {
   font-size: 0.8rem;
   color: #999;
 }
-.account {
+
+.author-info-divider {
+  font-size: 14px;
+  color: #888;
+}
+
+.author-info {
   background-color: #999;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+}
+
+.author-info-github {
+  margin-right: 10px !important;
+}
+
+.author-info-github:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+.author-info-wx {
+  position: relative;
+}
+
+.author-info-wx:hover {
+  cursor: pointer;
+  background-color: rgb(17, 179, 5);
 }
