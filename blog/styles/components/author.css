@@ -27,7 +27,8 @@
   background-color: #999;
 }
 
-.author-info-github {
+.author-info-github,
+.author-info-csdn {
   margin-right: 10px !important;
 }
 
@@ -35,8 +36,13 @@
   cursor: pointer;
   background-color: #333;
 }
+
 .author-info-wx {
   position: relative;
+}
+
+.author-info-csdn:hover {
+  background-color: #ff4d4d;
 }
 
 .author-info-wx:hover {

@@ -1,40 +1,68 @@
 html > body {
   padding: 0;
   margin: 0;
-  background-color: #f5f7fa;
+  /* overflow: auto; */
+  background-color: #f4f5f5;
 }
 
 .comm-header {
-  margin: 0 10rem;
+  position: relative;
+  height: 3.5rem;
 }
 
 .comm-content {
-  margin: 0 10rem;
+  margin-top: 1rem;
+  padding: 0 10rem;
+  overflow: auto;
+  height: 90vh;
+  /* background-color: #fff; */
 }
 
 .comm-left {
   background-color: #fff;
-  padding: 0.3rem;
   border-radius: 0.3rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid #eee;
-  /* margin-right: 20px; */
 }
 
 .comm-box {
   background-color: #fff;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
   padding: 0.3rem;
   border-radius: 0.3rem;
-  border-bottom: 1px solid #eee;
 }
 
 .comm-main {
-  margin-top: 0.5rem;
-  min-height: 600px;
+  height: 100%;
 }
 
+.comm-banner {
+  height: 20rem;
+  background: url('../../public/banner.jpg') no-repeat;
+  background-size: 100% 100%;
+}
+
+.bread-box {
+  background-color: #cce3fb !important;
+}
 .list-box {
+  padding-left: 18px;
   display: flex;
+}
+
+.ant-list-split {
+  border-bottom: 0;
+}
+
+.ant-list-item {
+  margin: 10px 20px;
+  transition: all 0.2s;
+}
+
+.ant-list-item:hover {
+  transform: scale(1.01);
+  border-color: rgba(0, 0, 0, 0.09);
+  box-shadow: 2px 2px 8px rgb(0 0 0 / 9%);
 }
 
 .list-box:hover {
@@ -84,4 +112,8 @@ html > body {
 
 .list-icon span {
   padding: 0 5px;
+}
+
+.new-article {
+  padding-left: 10px;
 }

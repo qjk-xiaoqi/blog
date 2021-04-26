@@ -28,13 +28,13 @@ const Header = () => {
     setCurNav(curKey)
   }, [])
   return (
-    <div className="header">
-      <Row type="flex" justify="space-between" align="middle" className="comm-header">
-        <Col xs={24} sm={24} md={10} lg={15} xl={4}>
+    <div className="header-box">
+      <Row type="flex" justify="space-between" align="middle" className="header-row">
+        <Col xs={24} sm={24} md={14} lg={15} xl={4}>
           <span className="header-logo">小柒</span>
           <span className="header-text">爱前端</span>
         </Col>
-        <Col className="menu-box" xs={0} sm={0} md={14} lg={8} xl={20}>
+        <Col className="menu-box" xs={0} sm={0} md={1} lg={8} xl={20}>
           <Menu mode="horizontal" selectedKeys={[curNav]} onClick={handleNav}>
             <Menu.Item key="home" icon={<HomeOutlined />}>
               <Link href="/">

@@ -7,7 +7,7 @@ import { Col, Row, List } from 'antd'
 import { CalendarOutlined, HeartOutlined, UserOutlined } from '@ant-design/icons'
 import Header from '../components/Header'
 import Author from '../components/Author'
-import Advert from '../components/Advert'
+import Sentence from '../components/Sentence'
 import Footer from '../components/Footer'
 import { getArticleList } from '../util/api'
 
@@ -33,16 +33,19 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <div>
       <Head>
         <title>Home</title>
       </Head>
-      <Header />
+      <div className="comm-header">
+        <Header />
+      </div>
       <div className="comm-content">
+        {/* <div className="comm-banner"></div> */}
         <Row className="comm-main" type="flex" justify="space-between">
-          <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={17}>
+          <Col className="comm-left" xs={24} sm={24} md={16} lg={16} xl={17}>
             <List
-              header={<div>最新文章</div>}
+              header={<div className="new-article">最新文章</div>}
               itemLayout="vertical"
               dataSource={myList}
               renderItem={item => (
@@ -76,14 +79,14 @@ export default function Home() {
               )}
             />
           </Col>
-          <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={6}>
+          <Col className="comm-right" xs={0} sm={0} md={8} lg={8} xl={6}>
             <Author />
-            {/* <Advert /> */}
+            <Sentence />
           </Col>
         </Row>
       </div>
 
-      <Footer />
-    </>
+      {/* <Footer /> */}
+    </div>
   )
 }

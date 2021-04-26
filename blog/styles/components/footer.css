@@ -1,6 +1,9 @@
 .footer-box {
   text-align: center;
+  position: fixed;
+  bottom: 0;
   width: 100%;
-  padding: 1rem;
+  padding: 0.4rem;
   color: #888;
+  background-color: #fff;
 }

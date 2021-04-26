@@ -1,6 +1,7 @@
 import React from 'react'
-import { Col, Row, Breadcrumb, Affix } from 'antd'
-import { CalendarOutlined, VideoCameraOutlined, UserOutlined } from '@ant-design/icons'
+import { Col, Row, Breadcrumb, Affix, Divider, Avatar, Input, Button } from 'antd'
+import moment from 'moment'
+import { CalendarOutlined, TagOutlined, UserOutlined, HeartOutlined, CommentOutlined } from '@ant-design/icons'
 import Head from 'next/head'
 import Link from 'next/link'
 import MarkNav from 'markdown-navbar'
@@ -8,7 +9,7 @@ import marked from 'marked'
 import highlight from 'highlight.js'
 import Header from '../components/Header'
 import Author from '../components/Author'
-import Advert from '../components/Advert'
+// import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import { getArticleById } from '../util/api'
 
@@ -36,57 +37,90 @@ const Detail = ({ data, params }) => {
       <Head>
         <title>博客详情页</title>
       </Head>
-      <Header />
-      <Row className="comm-main" type="flex" justify="center">
-        <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}>
-          <div>
-            <div className="bread-box">
-              <Breadcrumb>
-                <Breadcrumb.Item>
-                  <Link href="/">
-                    <a>首页</a>
-                  </Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  <Link href={`/list?type=${params.type_id}`}>
-                    <a>{params.type_name}</a>
-                  </Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>{data.title}</Breadcrumb.Item>
-              </Breadcrumb>
+      <div className="comm-header">
+        <Header />
+      </div>
+      <div className="comm-content ">
+        <Row className="comm-main" type="flex" justify="space-between">
+          <Col className="comm-left" xs={24} sm={24} md={16} lg={16} xl={18}>
+            <div>
+              <div className="bread-box">
+                <Breadcrumb>
+                  <Breadcrumb.Item>
+                    <Link href="/">
+                      <a>首页</a>
+                    </Link>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item>
+                    <Link href={`/list?type=${params.type_id}`}>
+                      <a>{params.type_name}</a>
+                    </Link>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item>{data.title}</Breadcrumb.Item>
+                </Breadcrumb>
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="detail-title">{data.title}</div>
-            <div className="list-icon list-center">
-              <span>
-                <CalendarOutlined /> 2020-10-9
-              </span>
-              <span>
-                <VideoCameraOutlined />
-                {data.typeName}
-              </span>
-              <span>
-                <UserOutlined />
-                5283人
-              </span>
-            </div>
+            <div>
+              <div className="detail-title">{data.title}</div>
+              <div className="list-icon list-center">
+                <span>
+                  <TagOutlined />
+                  {data.typeName}
+                </span>
+                <span>
+                  <UserOutlined />
+                  5283人
+                </span>
+                <span>
+                  <CalendarOutlined /> {moment.unix(data.add_time).format('YYYY-MM-DD hh:mm').toString()}
+                </span>
+              </div>
 
-            <div className="detail-content" dangerouslySetInnerHTML={{ __html: html }}></div>
-          </div>
-        </Col>
-        <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
-          <Author />
-          {/* <Advert /> */}
-          <Affix offsetTop={5}>
-            <div className="detail-nav comm-box">
-              <div className="nav-title">文章目录</div>
-              <MarkNav className="article-menu" source={data.article_content} ordered={false} />
+              <div className="detail-content" dangerouslySetInnerHTML={{ __html: html }}></div>
             </div>
-          </Affix>
-        </Col>
-      </Row>
-      <Footer />
+            <Divider orientation="left" className="detail-comment-divider">
+              <span>评论区</span>
+            </Divider>
+            <div className="detail-comment-box">
+              <div className="detail-comment-external">
+                <div className="detail-comment-inner">
+                  <div className="detail-comment-avatar">
+                    <Avatar style={{ backgroundColor: 'rgb(30, 144, 255)' }} icon={<UserOutlined />} />
+                  </div>
+                  <div className="detail-comment-content">
+                    <div className="detail-comment-author"></div>
+                    <div className="detail-comment-content-detail">
+                      <Input.TextArea bordered rows={4} />
+                      <Button className="detail-comment-btn" type="primary">
+                        评论
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col className="comm-right" xs={0} sm={0} md={8} lg={8} xl={6}>
+            <Author />
+            {/* <Advert /> */}
+            <Affix offsetTop={5}>
+              <div className="detail-nav comm-box">
+                <div className="nav-title">文章目录</div>
+                <MarkNav className="article-menu" source={data.article_content} ordered={false} />
+              </div>
+            </Affix>
+          </Col>
+        </Row>
+        <div className="detail-panel-box">
+          <div className="detail-panel detail-like detail-with-badge detail-active" data-badge="890">
+            <HeartOutlined className="detail-icon  active" />
+          </div>
+          <div className="detail-panel detail-comment detail-with-badge" data-badge="890">
+            <CommentOutlined className="detail-icon" />
+          </div>
+        </div>
+      </div>
+      {/* <Footer /> */}
     </>
   )
 }
