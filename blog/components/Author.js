@@ -5,9 +5,7 @@ import { GithubOutlined, WechatOutlined, CopyrightOutlined } from '@ant-design/i
 const Author = () => {
   return (
     <div className="author-box comm-box">
-      <Divider>
-        <span className="author-info-divider">ABOUT ME</span>
-      </Divider>
+      <Divider style={{ color: '#888', fontSize: '14px' }}>ABOUT ME</Divider>
       <Image width={100} height={100} src="/crazy.jpg" className="author-img" />
       <div className="author-introduction">
         <p className="author-name">小柒</p>

@@ -9,11 +9,12 @@ import marked from 'marked'
 import highlight from 'highlight.js'
 import Header from '../components/Header'
 import Author from '../components/Author'
+import CommentCom from '../components/Comment'
 // import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import { getArticleById } from '../util/api'
 
-const Detail = ({ data, params }) => {
+const Detail = ({ data, params, id }) => {
   const renderer = new marked.Renderer()
   marked.setOptions({
     renderer: renderer, // 必要 自定义的Renderer渲染出自定义的格式
@@ -78,26 +79,11 @@ const Detail = ({ data, params }) => {
 
               <div className="detail-content" dangerouslySetInnerHTML={{ __html: html }}></div>
             </div>
-            <Divider orientation="left" className="detail-comment-divider">
-              <span>评论区</span>
-            </Divider>
             <div className="detail-comment-box">
-              <div className="detail-comment-external">
-                <div className="detail-comment-inner">
-                  <div className="detail-comment-avatar">
-                    <Avatar style={{ backgroundColor: 'rgb(30, 144, 255)' }} icon={<UserOutlined />} />
-                  </div>
-                  <div className="detail-comment-content">
-                    <div className="detail-comment-author"></div>
-                    <div className="detail-comment-content-detail">
-                      <Input.TextArea bordered rows={4} />
-                      <Button className="detail-comment-btn" type="primary">
-                        评论
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Divider orientation="left" className="detail-comment-divider">
+                评论区
+              </Divider>
+              <CommentCom id={id} />
             </div>
           </Col>
           <Col className="comm-right" xs={0} sm={0} md={8} lg={8} xl={6}>
@@ -138,6 +124,7 @@ Detail.getInitialProps = async context => {
       type_id,
       type_name,
     },
+    id,
   }
 }
 

@@ -8,7 +8,7 @@ import { CalendarOutlined, HeartOutlined, UserOutlined } from '@ant-design/icons
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Sentence from '../components/Sentence'
-import Footer from '../components/Footer'
+import User from '../components/User'
 import { getArticleList } from '../util/api'
 
 export default function Home() {
@@ -81,6 +81,7 @@ export default function Home() {
           </Col>
           <Col className="comm-right" xs={0} sm={0} md={8} lg={8} xl={6}>
             <Author />
+            <User />
             <Sentence />
           </Col>
         </Row>

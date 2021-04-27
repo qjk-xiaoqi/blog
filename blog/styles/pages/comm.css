@@ -27,8 +27,7 @@ html > body {
 
 .comm-box {
   background-color: #fff;
-  margin-left: 1rem;
-  padding: 0.3rem;
+  padding: 0.3rem 1rem 1rem;
   border-radius: 0.3rem;
 }
 

@@ -1,0 +1,41 @@
+.user-box {
+  margin-top: 0.8rem;
+}
+
+.user-box .ant-card-body {
+  padding: 0;
+}
+
+.user-card-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+}
+
+.user-login-out {
+  position: relative;
+  top: 10px;
+  left: 35px;
+  font-size: 0.8rem;
+  color: #70acf0;
+  /* padding-right: 70px; */
+  cursor: pointer;
+}
+
+.user-form {
+  padding: 0 3rem;
+}
+
+.user-btn {
+  width: 100%;
+  margin-top: 1rem;
+  border-color: #70acf0;
+  color: #70acf0;
+}
+
+.user-login-from-btn {
+  width: 100%;
+}

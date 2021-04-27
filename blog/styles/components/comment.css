@@ -1,0 +1,28 @@
+.comment-box {
+  width: 100%;
+}
+
+.comment-external {
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+.comment-inner {
+  display: flex;
+}
+
+.comment-avatar {
+  margin-right: 0.8rem;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-btn {
+  margin: 1.5rem 0;
+}
+
+.comment-btn .ant-btn-primary {
+  background: rgb(30, 144, 255);
+}
