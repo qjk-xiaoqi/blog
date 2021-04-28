@@ -1,21 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Divider, Card, Avatar, Button, Modal, Form, Input, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { userRegister, userLogin, checkUsername } from '../util/api'
 
 // 登录
-const LoginForm = ({ closeModal }) => {
+const LoginForm = ({ closeModal, setUserInfo }) => {
+  const [form] = Form.useForm()
   const handleSubmit = values => {
     userLogin(values)
       .then(res => {
-        const { data, success } = res
+        const { data, success, message: msg } = res
+        const { user_info } = data
+        const curInfo = { username: user_info.username }
         if (!success) {
-          message.error('登录失败')
+          message.error(msg)
           return
         }
+        form.resetFields()
         closeModal()
-        localStorage.setItem('login', JSON.stringify(data))
-        message.success('登录成功')
+        setUserInfo(curInfo)
+        localStorage.setItem('login', JSON.stringify(curInfo))
+        message.success(msg)
+        history.go(0)
       })
       .catch(() => {
         message.error('登录失败')
@@ -24,7 +30,7 @@ const LoginForm = ({ closeModal }) => {
   }
 
   return (
-    <Form name="user_login" className="user-form" onFinish={handleSubmit}>
+    <Form form={form} name="user_login" className="user-form" onFinish={handleSubmit}>
       <Form.Item name="username" rules={[{ required: true, message: '请输入账号' }]}>
         <Input prefix={<UserOutlined />} placeholder="username" />
       </Form.Item>
@@ -46,19 +52,15 @@ const RegisterForm = ({ closeModal }) => {
 
   // 检查用户名是否重复
   const checkUser = () => {
-    const userName = form.getFieldValue('username')
-    if (!userName) {
+    const username = form.getFieldValue('username')
+    if (!username) {
       return
     }
-    checkUsername({ userName })
+    checkUsername({ username })
       .then(res => {
-        if (!res.success) {
-          form.setFieldsValue({
-            username: {
-              value: userName,
-              errors: [new Error(res.message)],
-            },
-          })
+        const { data, message } = res
+        if (data?.userList.length) {
+          form.setFields([{ name: 'username', value: username, errors: [message] }])
         }
       })
       .catch(err => {})
@@ -77,10 +79,12 @@ const RegisterForm = ({ closeModal }) => {
   const handleSubmit = values => {
     userRegister(values)
       .then(res => {
-        if (res?.success) {
-          message.success(res.message)
-          closeModal()
+        if (!res.success) {
+          message.error(res.message)
+          return
         }
+        message.success(res.message)
+        closeModal()
       })
       .catch(err => {
         message.error('注册失败')
@@ -149,13 +153,15 @@ const RegisterForm = ({ closeModal }) => {
 }
 
 const User = props => {
-  const { username, avatar } = props
+  const [userInfo, setUserInfo] = useState({ username: '' })
   const [registerShow, setRegisterShow] = useState(false)
   const [visible, setVisible] = useState(false)
 
   // 注销
   const handleLoginOut = () => {
     localStorage.removeItem('login')
+    setUserInfo({ username: '' })
+    history.go(0)
   }
 
   // 打开弹窗
@@ -170,21 +176,33 @@ const User = props => {
   // 是否注册
   const handleRegister = () => setRegisterShow(!registerShow)
 
+  useEffect(() => {
+    const info = JSON.parse(localStorage.getItem('login') || '{}')
+    if (!info.username) {
+      return
+    }
+    setUserInfo(info)
+  }, [])
+
   return (
     <div className="user-box comm-box">
       <Divider style={{ color: '#888', fontSize: '14px' }}>USER</Divider>
       <Card bordered={false}>
         <div className="user-card-box">
-          <span onClick={handleLoginOut} className="user-login-out">
-            注销
-          </span>
-          <Avatar size={55} src={avatar} style={{ backgroundColor: '#cce3fb' }} icon={<UserOutlined />} />
-          <p style={{ color: '#24c2cb' }}>{username}</p>
+          <Avatar size={55} style={{ backgroundColor: '#cce3fb' }} icon={<UserOutlined />} />
+          {userInfo.username && <p className="user-name">{userInfo.username}</p>}
         </div>
       </Card>
-      <Button className="user-btn" block onClick={showModal}>
-        登录
-      </Button>
+      {userInfo.username ? (
+        <Button className="user-btn" block onClick={handleLoginOut}>
+          注销
+        </Button>
+      ) : (
+        <Button className="user-btn" block onClick={showModal}>
+          登录
+        </Button>
+      )}
+
       <Modal
         title={registerShow ? '注册' : '登录'}
         width={500}
@@ -192,7 +210,11 @@ const User = props => {
         footer={null}
         onCancel={closeModal}
         maskClosable={false}>
-        {registerShow ? <RegisterForm closeModal={closeModal} /> : <LoginForm closeModal={closeModal} />}
+        {registerShow ? (
+          <RegisterForm closeModal={closeModal} />
+        ) : (
+          <LoginForm closeModal={closeModal} setUserInfo={setUserInfo} />
+        )}
         <div style={{ padding: '0 50px' }}>
           <span onClick={handleRegister} style={{ color: '#70acf0', cursor: 'pointer' }}>
             {registerShow ? '返回登录' : '没有账号? 前往注册'}

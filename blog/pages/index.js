@@ -23,11 +23,11 @@ export default function Home() {
   }
 
   useEffect(() => {
+    test()
     getArticleList().then(res => {
       if (!res) {
         return
       }
-      console.log(res.data, 'ress')
       setMyList(res.data)
     })
   }, [])

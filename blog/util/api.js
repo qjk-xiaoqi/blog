@@ -7,10 +7,10 @@ export const getArticleById = params => get('/blog/detail', params)
 export const getListById = params => get('/blog/typeList', params)
 
 // 提交留言
-export const submitArticleMessageApi = data => post('/blog/submitArticleMessage', {}, data)
+export const submitArticleComment = data => post('/blog/submitComment', {}, data)
 
-// 初始化留言
-export const initArticleMessageApi = data => post('/blog/initArticleMessage', {}, data)
+// 获取文章留言列表ByID
+export const commentListById = data => get('/blog/commentListById', data, {})
 
 // 用户注册
 export const userRegister = data => post('/blog/register', {}, data)

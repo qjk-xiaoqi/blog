@@ -10,7 +10,7 @@ import { getListById } from '../util/api'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Sentence from '../components/Sentence'
-import Footer from '../components/Footer'
+import User from '../components/User'
 
 const MyList = ({ data, type }) => {
   const router = useRouter()
@@ -84,6 +84,7 @@ const MyList = ({ data, type }) => {
           </Col>
           <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={6}>
             <Author />
+            <User />
             <Sentence />
           </Col>
         </Row>

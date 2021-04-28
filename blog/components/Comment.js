@@ -1,44 +1,47 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
-import { Avatar, Input, Button, Comment, Form, message, Spin, List } from 'antd'
-import { submitArticleMessageApi, initArticleMessageApi } from '../util/api'
+import { Avatar, Input, Button, Comment, Form, message, Spin, List, Tooltip } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
+import { submitArticleComment } from '../util/api'
 
-const CommentEditor = ({ id }) => {
+const CommentEditor = ({ id, getCommentList }) => {
   const loginInfo = JSON.parse(localStorage.getItem('login') || '{}')
   const [commentValue, setCommentValue] = useState('')
   const onChangeArea = e => setCommentValue(e.target.value)
 
   const onSubmit = async () => {
-    if (!commentValue) {
-      message.info('内容不能为空')
-      return
-    }
     if (!localStorage.getItem('login')) {
       message.info('请登录')
       return
     }
+    if (!commentValue.trim()) {
+      message.info('内容不能为空')
+      return
+    }
 
-    const { userName, avatar } = loginInfo
+    const { username } = loginInfo
     const params = {
-      author: userName,
-      avatar: avatar,
+      author: username,
+      avatar: '',
       content: commentValue,
-      pid: '0',
+      pid: 0,
       date: +new Date(),
       type: id,
     }
-    const result = await submitArticleMessageApi(params)
-    if (!result.success) {
-      message.error('留言失败！')
-      return
-    }
-    const res = await initArticleMessageApi({ id })
-    if (!res.success) {
-      message.error('留言失败！')
-      return
-    }
-    message.success('留言成功！')
+
+    submitArticleComment(params)
+      .then(res => {
+        if (!res.success) {
+          message.error('留言失败！')
+          return
+        }
+        message.success('留言成功！')
+        setCommentValue('')
+        getCommentList()
+      })
+      .catch(() => {
+        message.error('留言失败！')
+      })
   }
 
   return (
@@ -70,14 +73,54 @@ const CommentEditor = ({ id }) => {
 }
 
 // 评论item
-const CommentItem = ({ data }) => {
-  const { userName, author, avatar, content, date } = data
+const CommentItem = ({ data, id, getCommentList, children }) => {
+  const loginInfo = JSON.parse(localStorage.getItem('login') || '{}')
+  const { author, avatar, content, date, fathername } = data
   const [isShow, setIsShow] = useState(false)
   const [commentValue, setCommentValue] = useState('')
 
   const onChangeArea = e => setCommentValue(e.target.value)
-  const toggleComment = () => setIsShow(!isShow)
-  const handleSubmit = () => {}
+
+  const toggleComment = () => {
+    setIsShow(!isShow)
+    setCommentValue('')
+  }
+
+  const handleSubmit = () => {
+    if (!localStorage.getItem('login')) {
+      message.error('请登录')
+      return
+    }
+    if (!commentValue.trim()) {
+      message.info('内容不能为空')
+      return
+    }
+
+    const params = {
+      author: loginInfo.username,
+      avatar: '',
+      content: commentValue,
+      pid: data.pid || data.id,
+      date: +new Date(),
+      type: id,
+      fathername: author,
+    }
+
+    submitArticleComment(params)
+      .then(res => {
+        if (!res.success) {
+          message.error('留言失败！')
+          return
+        }
+        message.success('留言成功！')
+        setIsShow(false)
+        setCommentValue('')
+        getCommentList()
+      })
+      .catch(() => {
+        message.error('留言失败！')
+      })
+  }
 
   return (
     <Comment
@@ -89,7 +132,7 @@ const CommentItem = ({ data }) => {
               <Input.TextArea
                 onChange={onChangeArea}
                 value={commentValue}
-                placeholder={`回复...`}
+                placeholder={`回复...${author}`}
                 style={{ width: '100%', marginBottom: 5, fontSize: 12 }}
               />
               <Button onClick={handleSubmit} size="small" type="primary" style={{ fontSize: 12, marginRight: 10 }}>
@@ -102,12 +145,13 @@ const CommentItem = ({ data }) => {
           )}
         </>,
       ]}
-      author={author}
-      avatar={avatar}
+      author={fathername ? `${author} 回复 ${fathername}` : author}
+      avatar={<Avatar icon={<UserOutlined />} />}
       content={content}
+      children={children}
       datetime={
-        <Tooltip title={moment(date).subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-          <span>{moment(date).subtract(1, 'days').fromNow()}</span>
+        <Tooltip title={moment(date).format('YYYY-MM-DD HH:mm:ss')}>
+          <span>{moment(date).fromNow()}</span>
         </Tooltip>
       }
     />
@@ -115,48 +159,38 @@ const CommentItem = ({ data }) => {
 }
 
 // 评论list
-const CommentList = ({ list }) => {
+const CommentList = props => {
+  const { list, ...rest } = props
   return (
     <List
       className="comment-list"
       itemLayout="horizontal"
       dataSource={list}
-      renderItem={item => (
-        <li>
-          <CommentItem data={item} />
-        </li>
-      )}
+      renderItem={item => {
+        return (
+          <li>
+            {item.children ? (
+              <CommentItem data={item} children={<CommentList list={item.children} {...rest} />} />
+            ) : (
+              <CommentItem data={item} {...rest} />
+            )}
+          </li>
+        )
+      }}
     />
   )
 }
 
-const CommentCom = ({ id }) => {
-  const [loading, setLoading] = useState(false)
-  const [commentList, setCommentList] = useState([])
-
+const CommentCom = props => {
+  const { id, commentList, loading, getCommentListById } = props
   useEffect(() => {
-    setLoading(true)
-    initArticleMessageApi({ id })
-      .then(res => {
-        const { data, success } = res
-        if (!success) {
-          return
-        }
-        setCommentList(data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    getCommentListById()
   }, [])
-
   return (
     <>
-      <CommentEditor />
+      <CommentEditor getCommentList={getCommentListById} id={id} />
       <Spin spinning={loading} size="large">
-        <CommentList list={commentList} id={id} />
+        <CommentList list={commentList} getCommentList={getCommentListById} id={id} />
       </Spin>
     </>
   )

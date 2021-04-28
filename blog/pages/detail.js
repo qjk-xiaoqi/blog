@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Row, Breadcrumb, Affix, Divider, Avatar, Input, Button } from 'antd'
 import moment from 'moment'
 import { CalendarOutlined, TagOutlined, UserOutlined, HeartOutlined, CommentOutlined } from '@ant-design/icons'
@@ -10,9 +10,9 @@ import highlight from 'highlight.js'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import CommentCom from '../components/Comment'
-// import Advert from '../components/Advert'
-import Footer from '../components/Footer'
-import { getArticleById } from '../util/api'
+import User from '../components/User'
+import { getArticleById, commentListById } from '../util/api'
+import { arrayCommentToTree } from '../util/util'
 
 const Detail = ({ data, params, id }) => {
   const renderer = new marked.Renderer()
@@ -33,6 +33,28 @@ const Detail = ({ data, params, id }) => {
 
   // 使用 marked 将文章内容解析
   const html = marked(data.article_content)
+
+  // 获取评论信息
+  const [loading, setLoading] = useState(false)
+  const [commentList, setCommentList] = useState([])
+
+  const getCommentListById = () => {
+    setLoading(true)
+    commentListById({ id })
+      .then(({ data }) => {
+        const { list } = data
+        if (!data) {
+          return
+        }
+        setCommentList(arrayCommentToTree(list))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
   return (
     <>
       <Head>
@@ -43,7 +65,7 @@ const Detail = ({ data, params, id }) => {
       </div>
       <div className="comm-content ">
         <Row className="comm-main" type="flex" justify="space-between">
-          <Col className="comm-left" xs={24} sm={24} md={16} lg={16} xl={18}>
+          <Col className="comm-left" xs={24} sm={24} md={16} lg={16} xl={17}>
             <div>
               <div className="bread-box">
                 <Breadcrumb>
@@ -83,25 +105,27 @@ const Detail = ({ data, params, id }) => {
               <Divider orientation="left" className="detail-comment-divider">
                 评论区
               </Divider>
-              <CommentCom id={id} />
+              <CommentCom id={id} loading={loading} commentList={commentList} getCommentListById={getCommentListById} />
             </div>
           </Col>
           <Col className="comm-right" xs={0} sm={0} md={8} lg={8} xl={6}>
             <Author />
-            {/* <Advert /> */}
-            <Affix offsetTop={5}>
-              <div className="detail-nav comm-box">
-                <div className="nav-title">文章目录</div>
-                <MarkNav className="article-menu" source={data.article_content} ordered={false} />
-              </div>
-            </Affix>
+            <User />
+            {/* <Affix offsetTop={80}> */}
+            <div className="detail-nav comm-box">
+              <div className="nav-title">文章目录</div>
+              <MarkNav className="article-menu" source={data.article_content} ordered={false} />
+            </div>
+            {/* </Affix> */}
           </Col>
         </Row>
         <div className="detail-panel-box">
-          <div className="detail-panel detail-like detail-with-badge detail-active" data-badge="890">
+          <div className="detail-panel detail-like detail-with-badge detail-active" data-badge="10">
             <HeartOutlined className="detail-icon  active" />
           </div>
-          <div className="detail-panel detail-comment detail-with-badge" data-badge="890">
+          <div
+            className="detail-panel detail-comment detail-with-badge"
+            data-badge={commentList?.length ? commentList.length : 0}>
             <CommentOutlined className="detail-icon" />
           </div>
         </div>
