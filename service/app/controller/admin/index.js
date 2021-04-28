@@ -62,6 +62,7 @@ class HomeController extends Controller {
       'article.introduce as introduce,' +
       'article.time as add_time,' +
       'article.count as view_count,' +
+      'article.isPublish as is_Publish,' +
       'type.typeName as type_name,' +
       'type.id as type_id ' +
       'FROM article LEFT JOIN type ON article.type_id = type.id ' +

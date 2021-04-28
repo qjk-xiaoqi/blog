@@ -2,7 +2,7 @@
 
 const Controller = require('egg').Controller
 
-class HomeController extends Controller {
+class ArticleController extends Controller {
   async getArticleList() {
     const sql =
       'SELECT article.id as id,' +
@@ -11,9 +11,11 @@ class HomeController extends Controller {
       'article.introduce as introduce,' +
       'article.time as add_time,' +
       'article.count as view_count,' +
+      'article.isPublish as is_publish,' +
       'type.typeName as type_name,' +
       'type.id as type_id ' +
-      'FROM article LEFT JOIN type ON article.type_id = type.id'
+      'FROM article LEFT JOIN type ON article.type_id = type.id ' +
+      'WHERE article.isPublish = 1'
     // 查询数据库
     const res = await this.app.mysql.query(sql)
     this.ctx.body = {
@@ -63,7 +65,7 @@ class HomeController extends Controller {
       'type.typeName as type_name,' +
       'type.id as type_id ' +
       'FROM article LEFT JOIN type ON article.type_id = type.id ' +
-      'WHERE article.type_id=' +
+      'WHERE  article.isPublish = 1 and article.type_id=' +
       typeId
     const res = await this.app.mysql.query(sql)
     this.ctx.body = {
@@ -72,4 +74,4 @@ class HomeController extends Controller {
   }
 }
 
-module.exports = HomeController
+module.exports = ArticleController
