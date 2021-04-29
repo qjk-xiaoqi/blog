@@ -23,7 +23,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    test()
     getArticleList().then(res => {
       if (!res) {
         return

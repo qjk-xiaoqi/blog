@@ -124,7 +124,7 @@ const Detail = ({ data, params, id }) => {
             <HeartOutlined className="detail-icon  active" />
           </div>
           <div
-            className="detail-panel detail-comment detail-with-badge"
+            className="detail-panel detail-comment detail-with-badge detail-active"
             data-badge={commentList?.length ? commentList.length : 0}>
             <CommentOutlined className="detail-icon" />
           </div>
