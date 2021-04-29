@@ -13,7 +13,7 @@ const AdminIndex = props => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
-        <div className="admin-logo">小柒博客</div>
+        <div className="admin-logo">小柒 爱前端</div>
         <Menu theme="dark" defaultSelectedKeys={['/index']} selectedKeys={[location.pathname]} mode="inline">
           <Menu.Item key="/index" icon={<PieChartOutlined />} onClick={() => props.history.push('/index')}>
             工作台
