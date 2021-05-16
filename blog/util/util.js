@@ -14,7 +14,7 @@ export const arrayCommentToTree = data => {
     const parent = map[item.pid] // 是否存在父级
     if (parent) {
       ;(parent.children || (parent.children = [])).push(item)
-    } else {
+    } else if (item.pid === 0) {
       resultTree.push(item)
     }
   })
