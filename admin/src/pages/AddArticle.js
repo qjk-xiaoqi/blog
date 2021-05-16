@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import marked from 'marked'
 import qs from 'query-string'
 import moment from 'moment'
-import { Input, Select, Button, DatePicker, message } from 'antd'
+import { Input, Select, Button, DatePicker, message, Row, Col, Upload } from 'antd'
 import { getTypeInfo, addArticle, updateArticle, getArticleById } from '../util/api'
 import './AddArticle.css'
 
@@ -178,7 +178,8 @@ const AddArticle = props => {
           发布文章
         </Button>
       </div>
-      <div className="add-introduce">
+      <Row className="add-introduce">
+        {/* <Col> */}
         <TextArea
           rows={3}
           placeholder="文章简介"
@@ -187,7 +188,11 @@ const AddArticle = props => {
             setArticleInfo({ ...articleInfo, introduce: e.target.value })
           }}
         />
-      </div>
+        {/* </Col> */}
+        {/* <Col span={8}>
+          <span>上传封面图</span>
+        </Col> */}
+      </Row>
       <div className="add-editor-box">
         <TextArea
           className="add-editor"

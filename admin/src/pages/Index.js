@@ -4,6 +4,8 @@ import { Layout, Menu } from 'antd'
 import { DesktopOutlined, PieChartOutlined, FileOutlined, UserOutlined } from '@ant-design/icons'
 import AddArticle from './AddArticle'
 import ArticleList from './ArticleList'
+import CommentList from './CommentList'
+
 import './Index.css'
 
 const { Content, Sider } = Layout
@@ -24,8 +26,8 @@ const AdminIndex = props => {
           <Menu.Item key="/index/list" icon={<UserOutlined />} onClick={() => props.history.push('/index/list')}>
             文章列表
           </Menu.Item>
-          <Menu.Item key="/index/leave" icon={<FileOutlined />}>
-            留言管理
+          <Menu.Item key="/index/comment" icon={<FileOutlined />} onClick={() => props.history.push('/index/comment')}>
+            评论管理
           </Menu.Item>
         </Menu>
       </Sider>
@@ -36,6 +38,7 @@ const AdminIndex = props => {
               <Route path="/index" exact component={AddArticle} />
               <Route path="/index/add" component={AddArticle} />
               <Route path="/index/list" component={ArticleList} />
+              <Route path="/index/comment" component={CommentList} />
             </div>
           </div>
         </Content>

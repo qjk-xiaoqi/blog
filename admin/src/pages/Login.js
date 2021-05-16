@@ -17,12 +17,12 @@ const Login = props => {
         .then(res => {
           const { data, status } = res
           if (status === 0) {
-            localStorage.setItem('openId', data.openId)
+            localStorage.setItem('Authorization', data.token)
             setLoading(false)
             props.history.push('/index')
           }
           if (status === 1) {
-            message.error('用户名密码错误')
+            message.error(data.message)
             setTimeout(() => {
               setLoading(false)
             }, 500)

@@ -59,3 +59,25 @@ export const getArticleById = data => {
     }
   )
 }
+
+export const getCommentList = () => {
+  return get(
+    '/admin/getCommentList',
+    {},
+    {},
+    {
+      withCredentials: true,
+    }
+  )
+}
+
+export const delComment = data => {
+  return get(
+    '/admin/delComment',
+    data,
+    {},
+    {
+      withCredentials: true,
+    }
+  )
+}
