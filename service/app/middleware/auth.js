@@ -3,11 +3,27 @@
  * @param {当前应用 Application 的实例} app
  */
 module.exports = (options, app) => {
+  // 登录鉴权
   return async function auth(ctx, next) {
-    if (ctx.session.openId) {
-      await next()
+    const token = ctx.request.header.authorization
+    if (token) {
+      // token 认证
+      try {
+        app.jwt.verify(token, options.secret)
+        await next()
+      } catch (error) {
+        ctx.status = 401
+        ctx.body = {
+          data: {
+            message: error.message,
+          },
+        }
+      }
     } else {
-      ctx.body = { data: '没有登录' }
+      ctx.status = 401
+      ctx.body = {
+        message: '没有token',
+      }
     }
   }
 }

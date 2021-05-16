@@ -4,21 +4,32 @@ const Controller = require('egg').Controller
 
 class HomeController extends Controller {
   async login() {
-    const { userName, password } = this.ctx.request.body
+    const { ctx, app } = this
+    const { userName, password } = ctx.request.body
     const sql = "SELECT userName FROM admin_user WHERE userName = '" + userName + "' AND password = '" + password + "'"
-    const res = await this.app.mysql.query(sql)
+    const res = await app.mysql.query(sql)
     if (res.length > 0) {
-      const openId = new Date().getTime()
-      // this.ctx.cookies.set('openId', openId, {
-      //   httpOnly: false,
-      //   signed: false,
-      //   // widget_session=abc123,
-      //   // SameSite=None,
-      // })
-      this.ctx.session.openId = { openId }
-      this.ctx.body = { data: '登录成功', openId, status: 0 }
+      // 生成token
+      const token = app.jwt.sign(
+        {
+          username: userName, // 需要存储的 token 数据
+        },
+        app.config.jwt.secret
+      )
+      ctx.body = {
+        data: {
+          message: '登录成功',
+          token,
+        },
+        status: 0,
+      }
     } else {
-      this.ctx.body = { data: '登录失败', status: 1 }
+      ctx.body = {
+        data: {
+          message: '用户名密码错误',
+        },
+        status: 1,
+      }
     }
   }
   // 获取文章类型
@@ -104,6 +115,32 @@ class HomeController extends Controller {
     const res = await this.app.mysql.query(sql)
     this.ctx.body = {
       data: res,
+    }
+  }
+
+  // 获取评论列表
+  async getCommentList() {
+    // const sql = 'SELECT comment.id as id '
+    // 'comment.author as author,' +
+    // 'comment.content as content,' +
+    // 'comment.pid as pid,' +
+    // 'comment.date as add_time,' +
+    // 'comment.type as article_id,' +
+    // 'comment.fathername as father_name'
+    // 查询数据库
+    const res = await this.app.mysql.select('comment')
+    this.ctx.body = {
+      data: res,
+    }
+  }
+
+  // 删除评论
+  async delComment() {
+    const result = this.ctx.query
+    const res = await this.app.mysql.delete('comment', result)
+    const isSuccess = res.affectedRows === 1
+    this.ctx.body = {
+      data: isSuccess,
     }
   }
 }

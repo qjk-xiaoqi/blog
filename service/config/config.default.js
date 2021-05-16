@@ -78,6 +78,11 @@ module.exports = appInfo => {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   }
 
+  // 自定义 token 的加密条件
+  config.jwt = {
+    secret: '123456',
+  }
+
   return {
     ...config,
     ...userConfig,
